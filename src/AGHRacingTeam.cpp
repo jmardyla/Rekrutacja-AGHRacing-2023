@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <iostream>
+#include <map>
 
 
 void AGHRacingTeam::addMember(std::string name, int height, int yearOfJoining)
@@ -32,8 +33,17 @@ void AGHRacingTeam::addMember(std::string name, int height, int yearOfJoining)
 
 std::vector<std::string> AGHRacingTeam::getMembersSortedByHeightAsc()
 {
-    // add your code here
-    return std::vector<std::string>();
+    std::multimap<int, std::string> membersMultimapSortedByHeight;
+    for (const auto& teamMember : members) {
+        membersMultimapSortedByHeight.insert({teamMember.height, teamMember.name});
+    }
+
+    std::vector<std::string> vectorOfMemberNames;
+    for (const auto& pair : membersMultimapSortedByHeight) {
+        vectorOfMemberNames.push_back(pair.second);
+    }
+
+    return vectorOfMemberNames;
 }
 
 int AGHRacingTeam::getNumberOfMembersWhoJoinedInLeapYear()
