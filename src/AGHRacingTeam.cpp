@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <map>
-
+#include <unordered_map>
 
 void AGHRacingTeam::addMember(std::string name, int height, int yearOfJoining)
 {
@@ -31,7 +31,7 @@ void AGHRacingTeam::addMember(std::string name, int height, int yearOfJoining)
     }
 }
 
-std::vector<std::string> AGHRacingTeam::getMembersSortedByHeightAsc()
+std::vector<std::string> AGHRacingTeam::getMembersSortedByHeightAsc() // do rozważenia: próba wersji o złożoności liniowej
 {
     std::multimap<int, std::string> membersMultimapSortedByHeight;
     for (const auto& teamMember : members) {
@@ -59,6 +59,14 @@ int AGHRacingTeam::getNumberOfMembersWhoJoinedInLeapYear()
 
 int AGHRacingTeam::getMaxNumberOfJoinedInTheSameYear()
 {
-    // add your code here
-    return 0;
+    std::unordered_map<int, int> mapOfYearToItsCount;
+    for(const auto& teamMember : members) {
+        ++mapOfYearToItsCount[teamMember.yearOfJoining];
+    }
+
+    auto iteratorToPairWithMaxCount = std::max_element(mapOfYearToItsCount.begin(), mapOfYearToItsCount.end(),
+                                                  [](const auto& firstPair, const auto& secondPair) {
+                                                      return firstPair.second < secondPair.second;
+                                                  });
+    return iteratorToPairWithMaxCount->second;
 }
