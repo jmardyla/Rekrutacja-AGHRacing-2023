@@ -135,3 +135,28 @@ TEST(AGHRacingTeamTest, MaxJoinedInTheSameYear)
     team.addMember("Z", 200, 2000);
     ASSERT_EQ(team.getMaxNumberOfJoinedInTheSameYear(), 5);
 }
+
+TEST(AGHRacingTeamTest, SingleArgumentConstructorFromVector) {
+    std::vector<std::string> names = {"Bolek", "Lolek", "Romek", "Tomek", "Krzysiek", "Blowek", "Aaaaaaaaaaaaaaaaaaaaa", "mariusz", "Stefan"};
+    std::vector<int> heights = {165, 130, 170, 300, 189, 50, 175, 125, 200};
+    std::vector<int> years = {2000, 0, 2020, 2023, 2049, 2010, 2020, 2001, 2019};
+
+    std::vector<Member> vectorOfValidMembers{{"Bolek", 165, 2000}, {"Romek", 170, 2020}, {"Stefan", 200, 2019}};
+    std::vector<Member> vectorOfMembers;
+
+    for(int idx=0; idx<names.size(); ++idx) {
+        vectorOfMembers.emplace_back(names[idx], heights[idx], years[idx]);
+    }
+
+    AGHRacingTeam team(vectorOfMembers);
+
+    ASSERT_EQ(team.getMembers().size(), 3);
+
+    int index = 0;
+    for (const auto& member : team.getMembers()) {
+        ASSERT_EQ(member.name, vectorOfValidMembers[index].name);
+        ASSERT_EQ(member.height, vectorOfValidMembers[index].height);
+        ASSERT_EQ(member.yearOfJoining, vectorOfValidMembers[index].yearOfJoining);
+        ++index;
+    }
+}

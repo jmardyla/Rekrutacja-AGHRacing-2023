@@ -13,6 +13,10 @@ struct Member
 class AGHRacingTeam
 {
 public:
+    AGHRacingTeam() {};
+
+    AGHRacingTeam(const std::vector<Member>&);
+
     std::vector<Member> getMembers() { return members; }
 
     /**

@@ -6,6 +6,12 @@
 #include <map>
 #include <unordered_map>
 
+AGHRacingTeam::AGHRacingTeam(const std::vector<Member>& membersToAdd) {
+    for(const auto& person : membersToAdd) {
+        this->addMember(person.name, person.height, person.yearOfJoining);
+    }
+}
+
 void AGHRacingTeam::addMember(std::string name, int height, int yearOfJoining)
 {
     //// element wersji rzucającej wyjątkami, niestety testy jednostkowe nie przechodzą jeśli funkcja rzuca wyjątki
