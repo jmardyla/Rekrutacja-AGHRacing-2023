@@ -1,5 +1,10 @@
 #include "../include/AGHRacingTeam.h"
 
+#include <algorithm>
+#include <stdexcept>
+#include <iostream>
+
+
 void AGHRacingTeam::addMember(std::string name, int height, int yearOfJoining)
 {
     //// element wersji rzucającej wyjątkami, niestety testy jednostkowe nie przechodzą jeśli funkcja rzuca wyjątki
