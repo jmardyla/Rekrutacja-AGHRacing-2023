@@ -5,6 +5,7 @@
 #include <iostream>
 #include <map>
 #include <unordered_map>
+#include <array>
 
 AGHRacingTeam::AGHRacingTeam(const std::vector<Member>& membersToAdd) {
     for(const auto& person : membersToAdd) {
@@ -39,17 +40,26 @@ void AGHRacingTeam::addMember(std::string name, int height, int yearOfJoining)
 
 std::vector<std::string> AGHRacingTeam::getMembersSortedByHeightAsc()
 {
-    std::multimap<int, std::string> membersMultimapSortedByHeight;
-    for (const auto& teamMember : members) {
-        membersMultimapSortedByHeight.insert({teamMember.height, teamMember.name});
+    const int minHeight = 100;
+    const int maxHeight = 250;
+
+    std::vector<std::string> resultVectorOfSortedNames(members.size());
+    std::array<int, maxHeight-minHeight+1> arrayToCountOccurrences{};
+
+    for(const auto& member : members) {
+        ++arrayToCountOccurrences[member.height-minHeight];
     }
 
-    std::vector<std::string> vectorOfMemberNames;
-    for (const auto& pair : membersMultimapSortedByHeight) {
-        vectorOfMemberNames.push_back(pair.second);
+    for(int idx=1; idx<arrayToCountOccurrences.size(); ++idx) {
+        arrayToCountOccurrences[idx] += arrayToCountOccurrences[idx-1];
     }
 
-    return vectorOfMemberNames;
+    for(auto it=members.rbegin(); it!=members.rend(); ++it) {
+        resultVectorOfSortedNames[arrayToCountOccurrences[it->height-minHeight]-1] = it->name;
+        --arrayToCountOccurrences[it->height-minHeight];
+    }
+
+    return resultVectorOfSortedNames;
 }
 
 int AGHRacingTeam::getNumberOfMembersWhoJoinedInLeapYear()
