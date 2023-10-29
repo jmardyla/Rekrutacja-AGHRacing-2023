@@ -17,6 +17,8 @@ public:
 
     AGHRacingTeam(const std::vector<Member>&);
 
+    AGHRacingTeam(const AGHRacingTeam& other) = default;
+
     std::vector<Member> getMembers() { return members; }
 
     /**
