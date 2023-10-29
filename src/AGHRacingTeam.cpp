@@ -14,7 +14,7 @@ AGHRacingTeam::AGHRacingTeam(const std::vector<Member>& membersToAdd) {
 
 void AGHRacingTeam::addMember(std::string name, int height, int yearOfJoining)
 {
-    //// element wersji rzucającej wyjątkami, niestety testy jednostkowe nie przechodzą jeśli funkcja rzuca wyjątki
+    //// was considering throwing exceptions but the unit tests don't pass
 //    if (height<100 || height>250) {
 //        throw std::invalid_argument("Height has to be an integer in range [100, 250]");
 //    }
@@ -37,7 +37,7 @@ void AGHRacingTeam::addMember(std::string name, int height, int yearOfJoining)
     }
 }
 
-std::vector<std::string> AGHRacingTeam::getMembersSortedByHeightAsc() // do rozważenia: próba wersji o złożoności liniowej
+std::vector<std::string> AGHRacingTeam::getMembersSortedByHeightAsc()
 {
     std::multimap<int, std::string> membersMultimapSortedByHeight;
     for (const auto& teamMember : members) {
@@ -56,7 +56,7 @@ int AGHRacingTeam::getNumberOfMembersWhoJoinedInLeapYear()
 {
     int counterOfMembersWhoJoinedInLeapYear = 0;
     for(const auto& teamMember : members) {
-        if (teamMember.yearOfJoining%4==0) {                // w tym przedziale taki warunek wystarczy
+        if (teamMember.yearOfJoining%4==0) {                // in our working range this conditions is sufficient
             ++counterOfMembersWhoJoinedInLeapYear;
         }
     }
