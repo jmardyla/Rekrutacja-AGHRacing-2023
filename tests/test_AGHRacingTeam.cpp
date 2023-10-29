@@ -160,3 +160,25 @@ TEST(AGHRacingTeamTest, SingleArgumentConstructorFromVector) {
         ++index;
     }
 }
+
+TEST(AGHRacingTeamTest, CopyConstructorShallowCopy) {
+    std::vector<std::string> names = {"Bolek", "Lolek", "Romek"};
+    std::vector<int> heights = {165, 130, 170};
+    std::vector<int> years = {2010, 2020, 2021};
+
+    AGHRacingTeam teamOriginal;
+    for (int idx = 0; idx < names.size(); ++idx)
+    {
+        teamOriginal.addMember(names[idx], heights[idx], years[idx]);
+    }
+
+    AGHRacingTeam teamCopy(teamOriginal);
+    ASSERT_EQ(teamOriginal.getMembers().size(), teamCopy.getMembers().size());
+
+
+    for (int idx=0; idx<teamOriginal.getMembers().size(); ++idx) {
+        ASSERT_EQ(teamOriginal.getMembers()[idx].name, teamCopy.getMembers()[idx].name);
+        ASSERT_EQ(teamOriginal.getMembers()[idx].height, teamCopy.getMembers()[idx].height);
+        ASSERT_EQ(teamOriginal.getMembers()[idx].yearOfJoining, teamCopy.getMembers()[idx].yearOfJoining);
+    }
+}
